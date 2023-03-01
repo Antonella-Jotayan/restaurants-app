@@ -1,12 +1,18 @@
-import {useCallback, useRef} from 'react';
+import {useCallback, useEffect, useRef} from 'react';
 import {Keyboard, TextInput} from 'react-native';
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {styles} from './styles';
 import {SearchBar} from '../SearchBar';
+import {
+  useGetAdressByCoordinatesQuery,
+  useLazyGetAutocompletedPlacesbyTextQuery,
+} from '@src/store/apis/googleMapsApi';
 
 const snapPoints = ['15%', '100%'];
 
 const SearchBottomSheet = () => {
+  // const [getPlacesByText, {data}] = useLazyGetAutocompletedPlacesbyTextQuery();
+
   const sheetRef = useRef<BottomSheet>(null);
   const textInputRef = useRef<TextInput>(null);
 
