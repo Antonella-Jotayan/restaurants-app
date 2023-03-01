@@ -2,6 +2,7 @@ export enum SCREEN_NAMES {
   MAP_SCREEN = 'map',
   FAVORITE_RESTAURANTS = 'favoriteRestaurants',
   RECENT_RESTAURANTS = 'recentRestaurants',
+  SEARCH_BOTTOM_SHEET = 'search',
 }
 export enum STACK_NAMES {
   DRAWER_NAVIGATION = 'DrawerNavigationStack',
