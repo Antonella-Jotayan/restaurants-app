@@ -3,6 +3,8 @@ import clock from '@src/assets/svgs/clock.svg';
 import mapPin from '@src/assets/svgs/mapPin.svg';
 import star from '@src/assets/svgs/star.svg';
 import starFilled from '@src/assets/svgs/starFilled.svg';
+import book from '@src/assets/svgs/book.svg';
+import arrowRight from '@src/assets/svgs/arrowRight.svg';
 
 export const SVG_IMAGES = {
   cross,
@@ -10,4 +12,6 @@ export const SVG_IMAGES = {
   mapPin,
   star,
   starFilled,
+  book,
+  arrowRight,
 };

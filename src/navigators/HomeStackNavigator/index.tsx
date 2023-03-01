@@ -13,7 +13,11 @@ const HomeStackNavigator = () => {
         component={Home}
         options={{headerShown: false}}
       />
-      <Stack.Screen name="RestaurantDetail" component={RestaurantDetail} />
+      <Stack.Screen
+        name="RestaurantDetail"
+        component={RestaurantDetail}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };
