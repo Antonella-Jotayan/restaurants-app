@@ -1,20 +1,42 @@
-import {useCallback, useEffect, useRef} from 'react';
+import {FC, useCallback, useEffect, useRef, useState} from 'react';
 import {Keyboard, TextInput} from 'react-native';
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {styles} from './styles';
 import {SearchBar} from '../SearchBar';
 import {
-  useGetAdressByCoordinatesQuery,
   useLazyGetAutocompletedPlacesbyTextQuery,
+  useLazyGetPlaceDetailQuery,
 } from '@src/store/apis/googleMapsApi';
+import {useDebounce} from '@src/hooks/useDebounce';
+import {Row} from '@src/Components/Row';
+import {
+  AddressPrediction,
+  Coordinates,
+} from '@src/store/apis/googleMapsApi/types';
+
+interface SearchBottomSheetProps {
+  setCoordinates: (value: Coordinates) => void;
+}
 
 const snapPoints = ['15%', '100%'];
 
-const SearchBottomSheet = () => {
-  // const [getPlacesByText, {data}] = useLazyGetAutocompletedPlacesbyTextQuery();
-
+const SearchBottomSheet: FC<SearchBottomSheetProps> = ({setCoordinates}) => {
   const sheetRef = useRef<BottomSheet>(null);
   const textInputRef = useRef<TextInput>(null);
+  const shouldFetch = useRef<boolean>(true);
+  const [locationInput, setLocationInput] = useState<string>('');
+
+  const [getPlacesByText, {data: places}] =
+    useLazyGetAutocompletedPlacesbyTextQuery();
+  const [getPlaceDetail] = useLazyGetPlaceDetailQuery();
+
+  const debouncedValue = useDebounce<string>(locationInput);
+
+  useEffect(() => {
+    if (shouldFetch.current) {
+      getPlacesByText(debouncedValue);
+    }
+  }, [debouncedValue, getPlacesByText]);
 
   const handleSheetChange = useCallback((index: number) => {
     if (index === 0) {
@@ -25,6 +47,15 @@ const SearchBottomSheet = () => {
     }
   }, []);
 
+  const handleLocationPress = async (location: AddressPrediction) => {
+    const {data} = await getPlaceDetail(location.place_id);
+    const {lat: latitude, lng: longitude} = data?.result.geometry.location;
+    shouldFetch.current = false;
+    setLocationInput(location.structured_formatting.main_text);
+    sheetRef.current?.collapse();
+    setCoordinates({latitude, longitude});
+  };
+
   return (
     <BottomSheet
       keyboardBehavior="extend"
@@ -33,9 +64,25 @@ const SearchBottomSheet = () => {
       onChange={handleSheetChange}>
       <BottomSheetScrollView contentContainerStyle={styles.container}>
         <SearchBar
+          value={locationInput}
+          onChange={e => {
+            setLocationInput(e.nativeEvent.text);
+            shouldFetch.current = true;
+          }}
           onPressIn={() => sheetRef.current?.expand()}
           ref={textInputRef}
         />
+        {places?.predictions.map(location => {
+          return (
+            <Row
+              onPress={() => handleLocationPress(location)}
+              title={location.structured_formatting.main_text}
+              caption={location.structured_formatting.secondary_text}
+              iconName="mapPin"
+              key={location.place_id}
+            />
+          );
+        })}
       </BottomSheetScrollView>
     </BottomSheet>
   );

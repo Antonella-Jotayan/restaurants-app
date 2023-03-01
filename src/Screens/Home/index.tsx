@@ -2,12 +2,18 @@ import {View} from 'react-native';
 import {Map} from '@src/Components/Map';
 import {SearchBottomSheet} from './components/SearchBottomSheet';
 import {styles} from './styles';
+import {useState} from 'react';
+import {Coordinates} from '@src/store/apis/googleMapsApi/types';
 
 const Home = () => {
+  const [coordinates, setCoordinates] = useState<Coordinates>({
+    latitude: 0,
+    longitude: 0,
+  });
   return (
     <View style={styles.container}>
-      <Map />
-      <SearchBottomSheet />
+      <Map coordinates={coordinates} />
+      <SearchBottomSheet setCoordinates={setCoordinates} />
     </View>
   );
 };

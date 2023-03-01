@@ -23,3 +23,23 @@ export interface AddressPrediction {
 export interface AddressAutocompleteResponse {
   predictions: AddressPrediction[];
 }
+
+export interface AddressComponents {
+  long_name: string;
+  short_name: string;
+  types: string[];
+}
+
+export interface AddressDetailResponse {
+  result: {
+    geometry: {
+      location: {
+        lat: number;
+        lng: number;
+      };
+    };
+    address_components: AddressComponents[];
+    name: string;
+    formatted_address: string;
+  };
+}

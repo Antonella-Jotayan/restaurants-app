@@ -1,6 +1,7 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {
   AddressAutocompleteResponse,
+  AddressDetailResponse,
   AddressGeocodeResponse,
   Coordinates,
 } from './types';
@@ -42,10 +43,25 @@ export const googleMapsApi = createApi({
         },
       }),
     }),
+    getPlaceDetail: builder.query<AddressDetailResponse, string>({
+      query: placeId => ({
+        url: '/place/details/json',
+        headers: {'Content-Type': 'application/json'},
+        params: {
+          placeid: placeId,
+          language: 'en',
+          key: 'AIzaSyC1ReAIgwwPr2IGljrTB4UFuwpybvR0OLk',
+        },
+      }),
+      providesTags: (result, _1, placeId) => {
+        return result ? [{type: 'GoogleMaps', id: placeId}] : ['GoogleMaps'];
+      },
+    }),
   }),
 });
 
 export const {
   useGetAdressByCoordinatesQuery,
   useLazyGetAutocompletedPlacesbyTextQuery,
+  useLazyGetPlaceDetailQuery,
 } = googleMapsApi;
