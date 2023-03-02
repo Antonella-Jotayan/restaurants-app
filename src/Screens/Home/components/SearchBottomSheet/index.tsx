@@ -32,12 +32,6 @@ const SearchBottomSheet: FC<SearchBottomSheetProps> = ({setCoordinates}) => {
     useLazyGetAutocompletedPlacesbyTextQuery();
   const [getPlaceDetail] = useLazyGetPlaceDetailQuery();
 
-  const [getNearRestaurants, {data: nearRestaurants}] =
-    useLazyGetNearRestaurantsQuery();
-
-  const [getRestaurantDetail, {data: restaurantDetail}] =
-    useLazyGetRestaurantDetailQuery();
-
   const debouncedValue = useDebounce<string>(locationInput);
 
   useEffect(() => {
@@ -45,10 +39,6 @@ const SearchBottomSheet: FC<SearchBottomSheetProps> = ({setCoordinates}) => {
       getPlacesByText(debouncedValue);
     }
   }, [debouncedValue, getPlacesByText]);
-
-  useEffect(() => {
-    console.log('near restaurants', JSON.stringify(nearRestaurants, null, 2));
-  }, [nearRestaurants]);
 
   const handleSheetChange = useCallback((index: number) => {
     if (index === 0) {
@@ -66,15 +56,6 @@ const SearchBottomSheet: FC<SearchBottomSheetProps> = ({setCoordinates}) => {
     setLocationInput(location.structured_formatting.main_text);
     sheetRef.current?.collapse();
     setCoordinates({latitude, longitude});
-    const {data: nearRestaurantsResponse} = await getNearRestaurants({
-      latitude,
-      longitude,
-    });
-    const jj = await getRestaurantDetail(
-      nearRestaurantsResponse?.results[1]?.place_id,
-    );
-
-    console.log(JSON.stringify(jj, null, 2));
   };
 
   return (

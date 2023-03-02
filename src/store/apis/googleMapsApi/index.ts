@@ -1,4 +1,5 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import {BASE_GOOGLE_MAPS_URL, GOOGLE_MAPS_API_KEY} from '../../../../env';
 import {
   AddressAutocompleteResponse,
   AddressDetailResponse,
@@ -10,7 +11,7 @@ import {
 export const googleMapsApi = createApi({
   reducerPath: 'googleMaps',
   tagTypes: ['GoogleMaps'],
-  baseQuery: fetchBaseQuery({baseUrl: 'https://maps.googleapis.com/maps/api'}),
+  baseQuery: fetchBaseQuery({baseUrl: BASE_GOOGLE_MAPS_URL}),
   endpoints: builder => ({
     getAdressByCoordinates: builder.query<AddressGeocodeResponse, Coordinates>({
       query: ({latitude, longitude}) => ({
@@ -18,7 +19,7 @@ export const googleMapsApi = createApi({
         headers: {'Content-Type': 'application/json'},
         params: {
           latlng: `${latitude},${longitude}`,
-          key: 'AIzaSyC1ReAIgwwPr2IGljrTB4UFuwpybvR0OLk',
+          key: GOOGLE_MAPS_API_KEY,
         },
       }),
       providesTags: (result, _1, {latitude, longitude}) => {
@@ -40,7 +41,7 @@ export const googleMapsApi = createApi({
           strictBounds: true,
           types: ['address'],
           fields: ['address_components', 'geometry'],
-          key: 'AIzaSyC1ReAIgwwPr2IGljrTB4UFuwpybvR0OLk',
+          key: GOOGLE_MAPS_API_KEY,
         },
       }),
     }),
@@ -51,7 +52,7 @@ export const googleMapsApi = createApi({
         params: {
           placeid: placeId,
           language: 'en',
-          key: 'AIzaSyC1ReAIgwwPr2IGljrTB4UFuwpybvR0OLk',
+          key: GOOGLE_MAPS_API_KEY,
         },
       }),
       providesTags: (result, _1, placeId) => {
@@ -68,7 +69,7 @@ export const googleMapsApi = createApi({
           rankby: 'distance',
           limit: '10',
           language: 'en',
-          key: 'AIzaSyC1ReAIgwwPr2IGljrTB4UFuwpybvR0OLk',
+          key: GOOGLE_MAPS_API_KEY,
         },
       }),
     }),
@@ -88,7 +89,7 @@ export const googleMapsApi = createApi({
             'place_id',
             'url',
           ],
-          key: 'AIzaSyC1ReAIgwwPr2IGljrTB4UFuwpybvR0OLk',
+          key: GOOGLE_MAPS_API_KEY,
         },
       }),
     }),
@@ -100,5 +101,6 @@ export const {
   useLazyGetAutocompletedPlacesbyTextQuery,
   useLazyGetPlaceDetailQuery,
   useLazyGetNearRestaurantsQuery,
+  useGetNearRestaurantsQuery,
   useLazyGetRestaurantDetailQuery,
 } = googleMapsApi;

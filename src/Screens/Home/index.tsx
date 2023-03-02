@@ -6,10 +6,7 @@ import {useState} from 'react';
 import {Coordinates} from '@src/store/apis/googleMapsApi/types';
 
 const Home = () => {
-  const [coordinates, setCoordinates] = useState<Coordinates>({
-    latitude: 0,
-    longitude: 0,
-  });
+  const [coordinates, setCoordinates] = useState<Coordinates>();
   return (
     <View style={styles.container}>
       <Map coordinates={coordinates} />
