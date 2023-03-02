@@ -4,7 +4,6 @@ import {RestaurantRowItem} from '@src/Components/RestaurantRowItem';
 import {RootStackRouteProp} from '@src/navigators/RootStackNavigator/types';
 import {useGetNearRestaurantsQuery} from '@src/store/apis/googleMapsApi';
 import {Restaurant} from '@src/store/apis/googleMapsApi/types';
-import {COLORS} from '@src/styles/foundations/colors';
 import {useCallback} from 'react';
 import {FlatList, Text} from 'react-native';
 import {styles} from './style';

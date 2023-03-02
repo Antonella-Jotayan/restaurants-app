@@ -1,11 +1,10 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {BASE_GOOGLE_MAPS_URL, GOOGLE_MAPS_API_KEY} from '../../../../env';
+import ENV from 'react-native-config';
 import {
   AddressAutocompleteResponse,
   AddressDetailResponse,
   AddressGeocodeResponse,
   Coordinates,
-  NearRestaurantsResponse,
   Restaurant,
   RestaurantDetailResponse,
 } from './types';
@@ -14,7 +13,7 @@ import {sortByRating} from './utils';
 export const googleMapsApi = createApi({
   reducerPath: 'googleMaps',
   tagTypes: ['GoogleMaps'],
-  baseQuery: fetchBaseQuery({baseUrl: BASE_GOOGLE_MAPS_URL}),
+  baseQuery: fetchBaseQuery({baseUrl: ENV.BASE_GOOGLE_MAPS_URL}),
   endpoints: builder => ({
     getAdressByCoordinates: builder.query<AddressGeocodeResponse, Coordinates>({
       query: ({latitude, longitude}) => ({
@@ -22,7 +21,7 @@ export const googleMapsApi = createApi({
         headers: {'Content-Type': 'application/json'},
         params: {
           latlng: `${latitude},${longitude}`,
-          key: GOOGLE_MAPS_API_KEY,
+          key: ENV.GOOGLE_MAPS_API_KEY,
         },
       }),
       providesTags: (result, _1, {latitude, longitude}) => {
@@ -44,7 +43,7 @@ export const googleMapsApi = createApi({
           strictBounds: true,
           types: ['address'],
           fields: ['address_components', 'geometry'],
-          key: GOOGLE_MAPS_API_KEY,
+          key: ENV.GOOGLE_MAPS_API_KEY,
         },
       }),
     }),
@@ -55,7 +54,7 @@ export const googleMapsApi = createApi({
         params: {
           placeid: placeId,
           language: 'en',
-          key: GOOGLE_MAPS_API_KEY,
+          key: ENV.GOOGLE_MAPS_API_KEY,
         },
       }),
       providesTags: (result, _1, placeId) => {
@@ -72,7 +71,7 @@ export const googleMapsApi = createApi({
           rankby: 'distance',
           limit: '10',
           language: 'en',
-          key: GOOGLE_MAPS_API_KEY,
+          key: ENV.GOOGLE_MAPS_API_KEY,
         },
       }),
       transformResponse(response) {
@@ -105,7 +104,7 @@ export const googleMapsApi = createApi({
             'place_id',
             'url',
           ],
-          key: GOOGLE_MAPS_API_KEY,
+          key: ENV.GOOGLE_MAPS_API_KEY,
         },
       }),
       providesTags: (response, _1, placeId) => {

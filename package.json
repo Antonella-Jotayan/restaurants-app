@@ -9,7 +9,9 @@
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx src/",
     "lint:fix": "yarn lint --fix",
-    "type-check": "tsc -p ./tsconfig.json --skipLibCheck"
+    "type-check": "tsc -p ./tsconfig.json --skipLibCheck",
+    "env-decrypt": "bash scripts/env-decrypt.sh",
+    "env-encrypt": "bash scripts/env-encrypt.sh"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4",
@@ -20,6 +22,7 @@
     "query-string": "^8.1.0",
     "react": "18.2.0",
     "react-native": "0.71.3",
+    "react-native-config": "^1.5.0",
     "react-native-geolocation-service": "^5.3.1",
     "react-native-gesture-handler": "^2.9.0",
     "react-native-maps": "^1.4.0",
@@ -29,7 +32,8 @@
     "react-native-screens": "^3.20.0",
     "react-native-svg": "^13.8.0",
     "react-redux": "^8.0.5",
-    "redux-persist": "^6.0.0"
+    "redux-persist": "^6.0.0",
+    "senv": "^1.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

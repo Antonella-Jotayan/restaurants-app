@@ -1,4 +1,4 @@
-import {BASE_GOOGLE_MAPS_IMAGE_URL, GOOGLE_MAPS_API_KEY} from '../../env';
+import ENV from 'react-native-config';
 import queryString from 'query-string';
 
 const createGoogleImageUrl = (
@@ -6,11 +6,11 @@ const createGoogleImageUrl = (
   maxwidth = 400,
 ): string => {
   return queryString.stringifyUrl({
-    url: BASE_GOOGLE_MAPS_IMAGE_URL,
+    url: ENV.BASE_GOOGLE_MAPS_IMAGE_URL,
     query: {
       photo_reference: photoReference,
       maxwidth,
-      key: GOOGLE_MAPS_API_KEY,
+      key: ENV.GOOGLE_MAPS_API_KEY,
     },
   });
 };
