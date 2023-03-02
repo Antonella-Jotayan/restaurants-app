@@ -2,11 +2,14 @@ import {FONTS} from '@src/styles/foundations/fonts';
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 10,
-  },
   title: {
     ...FONTS.subtitle,
+    marginVertical: 10,
+    paddingHorizontal: 16,
+  },
+  emptyFavs: {
+    ...FONTS.smallHighlight,
+    alignSelf: 'center',
     marginVertical: 10,
   },
   favoriteContainer: {
@@ -14,6 +17,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginVertical: 10,
+    paddingHorizontal: 16,
+  },
+  flatlistContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   restaurantName: {
     ...FONTS.smallHighlight,
@@ -21,6 +30,7 @@ const styles = StyleSheet.create({
   restaurantAddress: {
     ...FONTS.lightText,
     marginVertical: 3,
+    paddingRight: 20,
   },
 });
 

@@ -6,10 +6,10 @@ import {Coordinates} from '@src/store/apis/googleMapsApi/types';
 import {CustomMarker} from './components/CustomMarker/CustomMarker';
 import {styles} from './styles';
 import {useNavigation} from '@react-navigation/native';
-import {HomeStackNavigatorProps} from '@src/navigators/HomeStackNavigator/types';
 
 import {IconButton} from '../IconButton';
 import {useGeolocation} from '@src/hooks/useGeolocation';
+import {RootStackNavigatorProps} from '@src/navigators/RootStackNavigator/types';
 
 interface MapProps {
   coordinates: Coordinates;
@@ -32,7 +32,7 @@ const Map: FC<MapProps> = ({coordinates, setCoordinates}) => {
     skip: !coordinates,
   });
 
-  const navigation = useNavigation<HomeStackNavigatorProps>();
+  const navigation = useNavigation<RootStackNavigatorProps>();
   const {getLocation, location} = useGeolocation();
   const mapRef = useRef<MapView>(null);
 

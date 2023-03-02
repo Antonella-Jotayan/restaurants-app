@@ -10,7 +10,7 @@ interface ImageCarouselProps {
 }
 
 const ImageCarousel: FC<ImageCarouselProps> = ({restaurant}) => {
-  if (restaurant.photos?.length <= 1) {
+  if (!restaurant.photos?.length || restaurant.photos?.length <= 1) {
     return null;
   }
 

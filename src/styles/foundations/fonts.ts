@@ -22,7 +22,7 @@ const FONTS = {
   lightText: {
     fontFamily: FAMILIES.montserratRegular,
     fontSize: 12,
-    color: '#6BGE70',
+    color: 'gray',
   },
 };
 

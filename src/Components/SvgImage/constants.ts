@@ -7,6 +7,8 @@ import book from '@src/assets/svgs/book.svg';
 import arrowRight from '@src/assets/svgs/arrowRight.svg';
 import mapMarkerShape from '@src/assets/svgs/mapMarkerShape.svg';
 import location from '@src/assets/svgs/location.svg';
+import heartFilled from '@src/assets/svgs/heartFilled.svg';
+import heartOutlined from '@src/assets/svgs/heartOutlined.svg';
 
 export const SVG_IMAGES = {
   cross,
@@ -18,4 +20,6 @@ export const SVG_IMAGES = {
   arrowRight,
   mapMarkerShape,
   location,
+  heartFilled,
+  heartOutlined,
 };

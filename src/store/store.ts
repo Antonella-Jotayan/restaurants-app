@@ -1,8 +1,10 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import {googleMapsApi} from './apis/googleMapsApi';
+import {favoriteRestaurants} from './slices/favoriteRestaurants';
 
 const reducers = combineReducers({
+  favoriteRestaurants: favoriteRestaurants.reducer,
   [googleMapsApi.reducerPath]: googleMapsApi.reducer,
 });
 

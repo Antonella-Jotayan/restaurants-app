@@ -1,6 +1,6 @@
 import {useRoute} from '@react-navigation/native';
 import {RemoteImage} from '@src/Components/RemoteImage/RemoteImage';
-import {HomeStackNavigatorRouteProp} from '@src/navigators/HomeStackNavigator/types';
+import {RootStackRouteProp} from '@src/navigators/RootStackNavigator/types';
 import {useGetRestaurantDetailQuery} from '@src/store/apis/googleMapsApi';
 import {imageUtils} from '@src/utils/imageUtils';
 import {ActivityIndicator, ScrollView, Text, View} from 'react-native';
@@ -11,7 +11,7 @@ import {Reviews} from './components/Reviews';
 import {styles} from './styles';
 
 const RestaurantDetail = () => {
-  const {params} = useRoute<HomeStackNavigatorRouteProp<'RestaurantDetail'>>();
+  const {params} = useRoute<RootStackRouteProp<'RestaurantDetail'>>();
 
   const {data, isLoading, isError} = useGetRestaurantDetailQuery(
     params.placeId,
