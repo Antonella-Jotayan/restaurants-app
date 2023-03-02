@@ -5,6 +5,7 @@ import {useAppSelector} from '@src/store/store';
 import {styles} from './styles';
 import {RestaurantRowItem} from '@src/Components/RestaurantRowItem';
 import {Restaurant} from '@src/store/apis/googleMapsApi/types';
+import {COLORS} from '@src/styles/foundations/colors';
 
 const FavoriteRestaurants = () => {
   const favorites = useAppSelector(selectRestaurants);
@@ -28,6 +29,7 @@ const FavoriteRestaurants = () => {
 
   return (
     <FlatList
+      style={styles.container}
       data={favorites}
       renderItem={renderItem}
       showsVerticalScrollIndicator={false}

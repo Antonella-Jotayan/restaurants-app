@@ -44,6 +44,7 @@ const RecentRestaurants: FC = () => {
 
   return (
     <FlatList
+      style={{backgroundColor: COLORS.light}}
       data={recents}
       renderItem={renderItem}
       showsVerticalScrollIndicator={false}

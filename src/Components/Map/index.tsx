@@ -1,5 +1,6 @@
 import {FC, useEffect, useRef} from 'react';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import {Text, TouchableOpacity} from 'react-native';
 
 import {useGetNearRestaurantsQuery} from '@src/store/apis/googleMapsApi';
 import {Coordinates, Restaurant} from '@src/store/apis/googleMapsApi/types';
@@ -43,12 +44,15 @@ const Map: FC<MapProps> = ({coordinates, setCoordinates}) => {
   const navigateToDetail = (restaurant: Restaurant) => {
     dispatch(addRecent(restaurant));
     navigation.navigate('RestaurantDetail', {placeId: restaurant.place_id});
-    console.log('restaurant', JSON.stringify(restaurant, null, 2));
   };
 
   const onPressUserLocation = () => {
     getLocation();
     mapRef.current?.animateToRegion({...coordinates, ...deltas}, 1000);
+  };
+
+  const navigateToSortedByRating = () => {
+    navigation.navigate('RestaurantsByRating', {coordinates});
   };
 
   useEffect(() => {
@@ -72,7 +76,7 @@ const Map: FC<MapProps> = ({coordinates, setCoordinates}) => {
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         initialRegion={initialRegion}>
-        {data?.results.slice(0, 10).map(restaurant => {
+        {data?.map(restaurant => {
           return (
             <CustomMarker
               key={restaurant.place_id}
@@ -88,6 +92,13 @@ const Map: FC<MapProps> = ({coordinates, setCoordinates}) => {
         onPress={onPressUserLocation}
         fill={COLORS.primary}
       />
+      {!!data?.length && (
+        <TouchableOpacity
+          onPress={navigateToSortedByRating}
+          style={styles.ratingButton}>
+          <Text style={styles.ratingButtonText}>View by rating</Text>
+        </TouchableOpacity>
+      )}
     </>
   );
 };

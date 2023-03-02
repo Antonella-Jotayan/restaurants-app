@@ -1,6 +1,7 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import {RestaurantDetail} from '@src/Screens/RestaurantDetail';
 import {HeaderRight} from '@src/Screens/RestaurantDetail/components/HeaderRight';
+import {RestaurantsByRating} from '@src/Screens/RestaurantsByRating';
 import {COLORS} from '@src/styles/foundations/colors';
 import {DrawerNavigation} from '../DrawerNavigator';
 import {styles} from './styles';
@@ -29,6 +30,11 @@ const RootStackNavigator = () => {
           headerTitleStyle: styles.headerTitleStyle,
           headerRightContainerStyle: styles.headerRightContainerStyle,
         }}
+      />
+      <Stack.Screen
+        name="RestaurantsByRating"
+        component={RestaurantsByRating}
+        options={{title: 'Restaurants By Rating'}}
       />
     </Stack.Navigator>
   );

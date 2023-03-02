@@ -1,7 +1,7 @@
-import {SvgImage} from '@src/Components';
-import {Restaurant} from '@src/store/apis/googleMapsApi/types';
 import {FC} from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
+import {Restaurant} from '@src/store/apis/googleMapsApi/types';
+import {Label} from '@src/Components/Label';
 import {styles} from './styles';
 
 interface RestaurantRatingProps {
@@ -10,16 +10,11 @@ interface RestaurantRatingProps {
 const RestaurantRating: FC<RestaurantRatingProps> = ({restaurant}) => {
   return (
     <View style={styles.opinionsContainer}>
-      <View style={styles.ratingContainer}>
-        <Text style={styles.ratingText}>{restaurant.rating ?? 0}</Text>
-        <SvgImage name="star" />
-      </View>
-      <View style={styles.totalReviews}>
-        <Text style={styles.totalReviewsText}>
-          {restaurant.user_ratings_total ?? 0} ratings
-        </Text>
-        <SvgImage name="book" />
-      </View>
+      <Label text={`${restaurant.rating ?? 0}`} iconName="star" />
+      <Label
+        text={`${restaurant.user_ratings_total ?? 0} ratings`}
+        iconName="book"
+      />
     </View>
   );
 };

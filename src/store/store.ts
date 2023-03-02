@@ -16,7 +16,7 @@ const reducers = combineReducers({
 const persistConfig = {
   key: 'root',
   storage: reduxStorage,
-  whiteList: ['favoriteRestaurants'],
+  whiteList: ['favoriteRestaurants', 'recentRestaurants'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

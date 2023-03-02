@@ -11,11 +11,19 @@ const styles = StyleSheet.create({
     ...FONTS.smallHighlight,
   },
   favoriteContainer: {
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginVertical: 10,
     paddingHorizontal: 16,
+  },
+  leftSide: {
+    width: '80%',
+    flexDirection: 'row',
+  },
+  textContainer: {
+    width: '90%',
   },
 });
 

@@ -6,8 +6,10 @@ import {
   AddressGeocodeResponse,
   Coordinates,
   NearRestaurantsResponse,
+  Restaurant,
   RestaurantDetailResponse,
 } from './types';
+import {sortByRating} from './utils';
 
 export const googleMapsApi = createApi({
   reducerPath: 'googleMaps',
@@ -60,7 +62,7 @@ export const googleMapsApi = createApi({
         return result ? [{type: 'GoogleMaps', id: placeId}] : ['GoogleMaps'];
       },
     }),
-    getNearRestaurants: builder.query<NearRestaurantsResponse, Coordinates>({
+    getNearRestaurants: builder.query<Restaurant[], Coordinates>({
       query: ({latitude, longitude}) => ({
         url: '/place/nearbysearch/json',
         headers: {'Content-Type': 'application/json'},
@@ -73,6 +75,13 @@ export const googleMapsApi = createApi({
           key: GOOGLE_MAPS_API_KEY,
         },
       }),
+      transformResponse(response) {
+        if (!response?.results) {
+          return [];
+        }
+        const firstTenClosestResults = response?.results.slice(0, 10);
+        return sortByRating(firstTenClosestResults);
+      },
       providesTags: (response, _1, coordinates) => {
         return response
           ? [{type: 'GoogleMaps', id: JSON.stringify(coordinates)}]
