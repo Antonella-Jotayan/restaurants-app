@@ -2,7 +2,7 @@ import {FC, useEffect, useRef} from 'react';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 
 import {useGetNearRestaurantsQuery} from '@src/store/apis/googleMapsApi';
-import {Coordinates} from '@src/store/apis/googleMapsApi/types';
+import {Coordinates, Restaurant} from '@src/store/apis/googleMapsApi/types';
 import {CustomMarker} from './components/CustomMarker/CustomMarker';
 import {styles} from './styles';
 import {useNavigation} from '@react-navigation/native';
@@ -10,6 +10,8 @@ import {useNavigation} from '@react-navigation/native';
 import {IconButton} from '../IconButton';
 import {useGeolocation} from '@src/hooks/useGeolocation';
 import {RootStackNavigatorProps} from '@src/navigators/RootStackNavigator/types';
+import {useAppDispatch} from '@src/store/store';
+import {addRecent} from '@src/store/slices/recentRestaurants';
 
 interface MapProps {
   coordinates: Coordinates;
@@ -35,9 +37,12 @@ const Map: FC<MapProps> = ({coordinates, setCoordinates}) => {
   const navigation = useNavigation<RootStackNavigatorProps>();
   const {getLocation, location} = useGeolocation();
   const mapRef = useRef<MapView>(null);
+  const dispatch = useAppDispatch();
 
-  const navigateToDetail = (placeId: string) => {
-    navigation.navigate('RestaurantDetail', {placeId});
+  const navigateToDetail = (restaurant: Restaurant) => {
+    dispatch(addRecent(restaurant));
+    navigation.navigate('RestaurantDetail', {placeId: restaurant.place_id});
+    console.log('restaurant', JSON.stringify(restaurant, null, 2));
   };
 
   const onPressUserLocation = () => {
@@ -71,7 +76,7 @@ const Map: FC<MapProps> = ({coordinates, setCoordinates}) => {
             <CustomMarker
               key={restaurant.place_id}
               restaurant={restaurant}
-              onPress={() => navigateToDetail(restaurant.place_id)}
+              onPress={() => navigateToDetail(restaurant)}
             />
           );
         })}

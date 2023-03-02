@@ -12,7 +12,9 @@ const DetailedInfo: FC<DetailedInfoProps> = ({restaurant}) => {
 
   const onPressLink = async () => {
     const isValid = await Linking.canOpenURL(url);
-    if (!isValid) return;
+    if (!isValid) {
+      return;
+    }
     Linking.openURL(url);
   };
 

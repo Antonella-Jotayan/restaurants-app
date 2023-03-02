@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     paddingHorizontal: 16,
   },
-  emptyFavs: {
+  emptyRecents: {
     ...FONTS.smallHighlight,
     alignSelf: 'center',
     marginVertical: 10,

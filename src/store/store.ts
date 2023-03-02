@@ -4,10 +4,12 @@ import persistReducer from 'redux-persist/es/persistReducer';
 import persistStore from 'redux-persist/es/persistStore';
 import {googleMapsApi} from './apis/googleMapsApi';
 import {favoriteRestaurants} from './slices/favoriteRestaurants';
+import {recentRestaurants} from './slices/recentRestaurants';
 import {reduxStorage} from './storage';
 
 const reducers = combineReducers({
   favoriteRestaurants: favoriteRestaurants.reducer,
+  recentRestaurants: recentRestaurants.reducer,
   [googleMapsApi.reducerPath]: googleMapsApi.reducer,
 });
 

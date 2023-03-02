@@ -30,14 +30,16 @@ export interface AddressComponents {
   types: string[];
 }
 
+export type Geometry = {
+  location: {
+    lat: number;
+    lng: number;
+  };
+};
+
 export interface AddressDetailResponse {
   result: {
-    geometry: {
-      location: {
-        lat: number;
-        lng: number;
-      };
-    };
+    geometry: Geometry;
     address_components: AddressComponents[];
     name: string;
     formatted_address: string;
@@ -78,6 +80,7 @@ export type Restaurant = {
   types: string[];
   url: string;
   user_ratings_total: number;
+  geometry: Geometry;
 };
 
 export type RestaurantDetailResponse = {
