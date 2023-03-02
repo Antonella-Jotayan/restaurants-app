@@ -48,48 +48,38 @@ export interface NearRestaurantsResponse {
   results: Restaurant[];
 }
 
-export type Restaurant = {
-  business_status: string;
-  geometry: {
-    location: {
-      lat: number;
-      lng: number;
-    };
-    viewport: {
-      northeast: {
-        lat: number;
-        lng: number;
-      };
-      southwest: {
-        lat: number;
-        lng: number;
-      };
-    };
-  };
-  icon: string;
-  icon_background_color: string;
-  icon_mask_base_uri: string;
-  name: string;
-  opening_hours: {
-    open_now: true;
-  };
-  photos: [
-    {
-      height: number;
-      html_attributions: string[];
-      photo_reference: string;
-      width: number;
-    },
-  ];
-  place_id: string;
-  plus_code: {
-    compound_code: string;
-    global_code: string;
-  };
+type Photo = {
+  height: number;
+  html_attributions: string[];
+  photo_reference: string;
+  width: number;
+};
+
+export type Review = {
+  author_name: string;
+  author_url: string;
+  language: string;
+  original_language: string;
+  profile_photo_url: string;
   rating: number;
-  reference: string;
-  scope: string;
+  relative_time_description: string;
+  text: string;
+  time: number;
+  translated: false;
+};
+
+export type Restaurant = {
+  formatted_address: string;
+  name: string;
+  photos: Photo[];
+  place_id: string;
+  rating: number;
+  reviews: Review[];
   types: string[];
+  url: string;
   user_ratings_total: number;
-  vicinity: string;
+};
+
+export type RestaurantDetailResponse = {
+  result: Restaurant;
 };

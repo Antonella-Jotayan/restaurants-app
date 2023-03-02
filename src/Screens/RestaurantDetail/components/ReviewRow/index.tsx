@@ -1,31 +1,33 @@
+import {FC} from 'react';
+import {Text, View} from 'react-native';
 import {SvgImage} from '@src/Components';
-import {Image, Text, View} from 'react-native';
+import {RemoteImage} from '@src/Components/RemoteImage/RemoteImage';
+import {Review} from '@src/store/apis/googleMapsApi/types';
 import {styles} from './styles';
 
-const ReviewRow = () => {
+interface ReviewRowProps {
+  review: Review;
+}
+
+const ReviewRow: FC<ReviewRowProps> = ({review}) => {
   return (
     <View style={styles.reviewContainer}>
-      <Image
+      <RemoteImage
         style={styles.userImage}
-        source={{
-          uri: 'https://www.gardeners.com/globalassets/articles/gardening/2023content/8078-chive-flowers-edible.jpg',
-        }}
+        source={{uri: review.profile_photo_url}}
       />
       <View style={styles.textContentContainer}>
         <View style={styles.reviewHeader}>
           <View>
             <View style={styles.ratingContainer}>
-              <Text style={styles.ratingText}>4.5</Text>
+              <Text style={styles.ratingText}>{review.rating}</Text>
               <SvgImage name="star" />
             </View>
-            <Text style={styles.infoItem}>Sean Allen</Text>
+            <Text style={styles.infoItem}>{review.author_name}</Text>
           </View>
-          <Text style={styles.timeText}>a year ago</Text>
+          <Text style={styles.timeText}>{review.time}</Text>
         </View>
-        <Text style={styles.reviewDescription}>
-          This restaurant is amazing because food is delicious, waiting times
-          are very short and people is very kind.
-        </Text>
+        <Text style={styles.reviewDescription}>{review.text}</Text>
       </View>
     </View>
   );

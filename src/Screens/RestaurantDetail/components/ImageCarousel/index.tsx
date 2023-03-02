@@ -1,36 +1,35 @@
-import {Image, ScrollView} from 'react-native';
+import {RemoteImage} from '@src/Components/RemoteImage/RemoteImage';
+import {Restaurant} from '@src/store/apis/googleMapsApi/types';
+import {imageUtils} from '@src/utils/imageUtils';
+import {FC} from 'react';
+import {ScrollView} from 'react-native';
 import {styles} from './styles';
 
-const ImageCarousel = () => {
+interface ImageCarouselProps {
+  restaurant: Restaurant;
+}
+
+const ImageCarousel: FC<ImageCarouselProps> = ({restaurant}) => {
+  if (restaurant.photos?.length <= 1) {
+    return null;
+  }
+
   return (
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.carouselContentContainer}>
-      <Image
-        style={styles.carouselImage}
-        source={{
-          uri: 'https://www.gardeners.com/globalassets/articles/gardening/2023content/8078-chive-flowers-edible.jpg',
-        }}
-      />
-      <Image
-        style={styles.carouselImage}
-        source={{
-          uri: 'https://www.gardeners.com/globalassets/articles/gardening/2023content/8078-chive-flowers-edible.jpg',
-        }}
-      />
-      <Image
-        style={styles.carouselImage}
-        source={{
-          uri: 'https://www.gardeners.com/globalassets/articles/gardening/2023content/8078-chive-flowers-edible.jpg',
-        }}
-      />
-      <Image
-        style={styles.carouselImage}
-        source={{
-          uri: 'https://www.gardeners.com/globalassets/articles/gardening/2023content/8078-chive-flowers-edible.jpg',
-        }}
-      />
+      {restaurant.photos.slice(1).map(photo => {
+        return (
+          <RemoteImage
+            key={photo.photo_reference}
+            style={styles.carouselImage}
+            source={{
+              uri: imageUtils.createGoogleImageUrl(photo.photo_reference),
+            }}
+          />
+        );
+      })}
     </ScrollView>
   );
 };

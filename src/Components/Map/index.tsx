@@ -1,9 +1,13 @@
-import {useGetNearRestaurantsQuery} from '@src/store/apis/googleMapsApi';
-import {Coordinates} from '@src/store/apis/googleMapsApi/types';
 import {FC} from 'react';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+
+import {useGetNearRestaurantsQuery} from '@src/store/apis/googleMapsApi';
+import {Coordinates} from '@src/store/apis/googleMapsApi/types';
 import {CustomMarker} from './components/CustomMarker/CustomMarker';
 import {styles} from './styles';
+import {useNavigation} from '@react-navigation/native';
+import {HomeStackNavigatorProps} from '@src/navigators/HomeStackNavigator/types';
+
 interface MapProps {
   coordinates: Coordinates;
 }
@@ -18,6 +22,11 @@ const Map: FC<MapProps> = ({coordinates}) => {
   const {data} = useGetNearRestaurantsQuery(coordinates, {
     skip: !coordinates,
   });
+  const navigation = useNavigation<HomeStackNavigatorProps>();
+
+  const navigateToDetail = (placeId: string) => {
+    navigation.navigate('RestaurantDetail', {placeId});
+  };
 
   return (
     <MapView
@@ -31,7 +40,11 @@ const Map: FC<MapProps> = ({coordinates}) => {
       initialRegion={initialRegion}>
       {data?.results.slice(0, 10).map(restaurant => {
         return (
-          <CustomMarker restaurant={restaurant} key={restaurant.place_id} />
+          <CustomMarker
+            key={restaurant.place_id}
+            restaurant={restaurant}
+            onPress={() => navigateToDetail(restaurant.place_id)}
+          />
         );
       })}
     </MapView>

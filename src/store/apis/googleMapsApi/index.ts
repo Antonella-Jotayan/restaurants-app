@@ -6,6 +6,7 @@ import {
   AddressGeocodeResponse,
   Coordinates,
   NearRestaurantsResponse,
+  RestaurantDetailResponse,
 } from './types';
 
 export const googleMapsApi = createApi({
@@ -73,7 +74,7 @@ export const googleMapsApi = createApi({
         },
       }),
     }),
-    getRestaurantDetail: builder.query<string, string>({
+    getRestaurantDetail: builder.query<RestaurantDetailResponse, string>({
       query: placeId => ({
         url: '/place/details/json',
         headers: {'Content-Type': 'application/json'},
@@ -85,6 +86,7 @@ export const googleMapsApi = createApi({
             'type',
             'reviews',
             'rating',
+            'user_ratings_total',
             'photos',
             'place_id',
             'url',
@@ -102,5 +104,5 @@ export const {
   useLazyGetPlaceDetailQuery,
   useLazyGetNearRestaurantsQuery,
   useGetNearRestaurantsQuery,
-  useLazyGetRestaurantDetailQuery,
+  useGetRestaurantDetailQuery,
 } = googleMapsApi;

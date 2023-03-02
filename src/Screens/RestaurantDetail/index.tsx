@@ -1,32 +1,51 @@
-import {Image, ScrollView, Text, View} from 'react-native';
+import {useRoute} from '@react-navigation/native';
+import {RemoteImage} from '@src/Components/RemoteImage/RemoteImage';
+import {HomeStackNavigatorRouteProp} from '@src/navigators/HomeStackNavigator/types';
+import {useGetRestaurantDetailQuery} from '@src/store/apis/googleMapsApi';
+import {imageUtils} from '@src/utils/imageUtils';
+import {ActivityIndicator, ScrollView, Text, View} from 'react-native';
 import {DetailedInfo} from './components/DetailedInfo';
 import {ImageCarousel} from './components/ImageCarousel';
 import {RestaurantRating} from './components/RestaurantRating';
-import {ReviewRow} from './components/ReviewRow';
+import {Reviews} from './components/Reviews';
 import {styles} from './styles';
 
 const RestaurantDetail = () => {
+  const {params} = useRoute<HomeStackNavigatorRouteProp<'RestaurantDetail'>>();
+
+  const {data, isLoading, isError} = useGetRestaurantDetailQuery(
+    params.placeId,
+  );
+
+  if (isLoading) {
+    return <ActivityIndicator />;
+  }
+
+  if (isError || !data) {
+    return <Text>There was an error with the restaurant</Text>;
+  }
+
+  const {result: restaurant} = data;
+
   return (
-    <View>
-      <Image
+    <View style={styles.container}>
+      <RemoteImage
         style={styles.image}
         source={{
-          uri: 'https://www.gardeners.com/globalassets/articles/gardening/2023content/8078-chive-flowers-edible.jpg',
+          uri: imageUtils.createGoogleImageUrl(
+            restaurant.photos?.[0]?.photo_reference,
+          ),
         }}
       />
-      <Text style={styles.title}>Kansas Pilar</Text>
-      <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.title}>{restaurant.name}</Text>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        showsVerticalScrollIndicator={false}>
         <View style={styles.infoContainer}>
-          <RestaurantRating />
-          <DetailedInfo />
-          <ImageCarousel />
-          <View style={styles.reviewsContainer}>
-            <Text style={styles.reviewsTitle}>Reviews</Text>
-            <ReviewRow />
-            <ReviewRow />
-            <ReviewRow />
-            <ReviewRow />
-          </View>
+          <RestaurantRating restaurant={restaurant} />
+          <DetailedInfo restaurant={restaurant} />
+          <ImageCarousel restaurant={restaurant} />
+          <Reviews restaurant={restaurant} />
         </View>
       </ScrollView>
     </View>
