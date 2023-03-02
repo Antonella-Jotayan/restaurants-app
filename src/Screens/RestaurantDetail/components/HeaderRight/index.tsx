@@ -8,6 +8,7 @@ import {
   selectRestaurants,
 } from '@src/store/slices/favoriteRestaurants';
 import {useAppDispatch, useAppSelector} from '@src/store/store';
+import {COLORS} from '@src/styles/foundations/colors';
 
 const HeaderRight = () => {
   const favorites = useAppSelector(selectRestaurants);
@@ -36,7 +37,7 @@ const HeaderRight = () => {
   return (
     <IconButton
       name={isFavorited ? 'heartFilled' : 'heartOutlined'}
-      fill={isFavorited ? 'red' : 'black'}
+      fill={isFavorited ? COLORS.red : COLORS.dark}
       onPress={handleFavorite}
     />
   );

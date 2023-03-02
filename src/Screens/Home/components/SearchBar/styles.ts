@@ -1,12 +1,15 @@
+import {COLORS} from '@src/styles/foundations/colors';
+import {FONTS} from '@src/styles/foundations/fonts';
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   textInput: {
-    borderColor: 'gray',
-    borderWidth: 1,
+    borderColor: COLORS.primary,
+    borderWidth: 2,
     borderRadius: 100,
     width: '100%',
     padding: 10,
+    ...FONTS.body,
   },
 });
 

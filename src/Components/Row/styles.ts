@@ -1,3 +1,5 @@
+import {COLORS} from '@src/styles/foundations/colors';
+import {FONTS} from '@src/styles/foundations/fonts';
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
@@ -10,15 +12,15 @@ const styles = StyleSheet.create({
   textContainer: {
     width: '100%',
     marginLeft: 10,
-    borderColor: 'gray',
+    borderColor: COLORS.primary,
     borderBottomWidth: StyleSheet.hairlineWidth,
     paddingVertical: 10,
   },
   title: {
-    color: 'black',
+    ...FONTS.smallHighlight,
   },
   caption: {
-    color: 'gray',
+    ...FONTS.lightText,
   },
 });
 export {styles};

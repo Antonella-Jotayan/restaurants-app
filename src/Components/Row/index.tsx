@@ -1,3 +1,4 @@
+import {COLORS} from '@src/styles/foundations/colors';
 import {FC} from 'react';
 import {
   Text,
@@ -17,7 +18,7 @@ interface RowProps extends TouchableOpacityProps {
 const Row: FC<RowProps> = ({title, caption, iconName, ...props}) => {
   return (
     <TouchableOpacity style={styles.container} {...props}>
-      <SvgImage name={iconName} />
+      <SvgImage name={iconName} fill={COLORS.primary} />
       <View style={styles.textContainer}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.caption}>{caption}</Text>

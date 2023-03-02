@@ -1,13 +1,20 @@
 import {RestaurantRowItem} from '@src/Components/RestaurantRowItem';
 import {Restaurant} from '@src/store/apis/googleMapsApi/types';
-import {selectRecents} from '@src/store/slices/recentRestaurants';
+import {clearRecents, selectRecents} from '@src/store/slices/recentRestaurants';
 import {useAppSelector} from '@src/store/store';
+import {COLORS} from '@src/styles/foundations/colors';
 import {FC, useCallback} from 'react';
-import {FlatList, Text} from 'react-native';
+import {Button, FlatList, Text, View} from 'react-native';
+import {useDispatch} from 'react-redux';
 import {styles} from './styles';
 
 const RecentRestaurants: FC = () => {
   const recents = useAppSelector(selectRecents);
+  const dispatch = useDispatch();
+
+  const handleClearRecents = () => {
+    dispatch(clearRecents());
+  };
 
   const hasRecents = !!recents.length;
 
@@ -15,7 +22,16 @@ const RecentRestaurants: FC = () => {
     if (!hasRecents) {
       return null;
     }
-    return <Text style={styles.title}>Recent Viewed Restaurants</Text>;
+    return (
+      <View style={styles.headerContainer}>
+        <Text style={styles.title}>Recent Viewed Restaurants</Text>
+        <Button
+          title="Clear All"
+          color={COLORS.primary}
+          onPress={handleClearRecents}
+        />
+      </View>
+    );
   };
 
   const listEmptyComponent = () => {

@@ -1,3 +1,5 @@
+import {COLORS} from './colors';
+
 const FAMILIES = {
   montserratExtraLight: 'Montserrat-ExtraLight',
   montserratRegular: 'Montserrat-Regular',
@@ -6,23 +8,43 @@ const FAMILIES = {
   montserratExtraBold: 'Montserrat-ExtraBold',
 };
 
+const SIZES = {
+  sm: 12,
+  md: 14,
+  lg: 18,
+  xl: 22,
+};
+
 const FONTS = {
-  title: {fontFamily: FAMILIES.montserratBold, fontSize: 20, color: '#000'},
+  title: {
+    fontFamily: FAMILIES.montserratBold,
+    fontSize: SIZES.xl,
+    color: COLORS.dark,
+  },
   subtitle: {
     fontFamily: FAMILIES.montserratSemiBold,
-    fontSize: 16,
-    color: '#000',
+    fontSize: SIZES.lg,
+    color: COLORS.dark,
   },
-  body: {fontFamily: FAMILIES.montserratRegular, fontSize: 13, color: '#000'},
+  body: {
+    fontFamily: FAMILIES.montserratRegular,
+    fontSize: SIZES.md,
+    color: COLORS.dark,
+  },
   smallHighlight: {
     fontFamily: FAMILIES.montserratSemiBold,
-    fontSize: 14,
-    color: '#000',
+    fontSize: SIZES.md,
+    color: COLORS.dark,
   },
   lightText: {
     fontFamily: FAMILIES.montserratRegular,
-    fontSize: 12,
-    color: 'gray',
+    fontSize: SIZES.sm,
+    color: COLORS.semiDark,
+  },
+  link: {
+    fontFamily: FAMILIES.montserratSemiBold,
+    fontSize: SIZES.md,
+    color: COLORS.link,
   },
 };
 

@@ -6,6 +6,7 @@ import {SvgImage} from '@src/Components/SvgImage';
 import {styles} from './styles';
 import {imageUtils} from '@src/utils/imageUtils';
 import {RemoteImage} from '@src/Components/RemoteImage/RemoteImage';
+import {COLORS} from '@src/styles/foundations/colors';
 
 interface CustomMarkerProps {
   restaurant: Restaurant;
@@ -28,6 +29,7 @@ const CustomMarker: FC<CustomMarkerProps> = ({restaurant, onPress}) => {
           style={styles.markerShape}
           width={65}
           height={65}
+          fill={COLORS.primary}
         />
 
         <RemoteImage

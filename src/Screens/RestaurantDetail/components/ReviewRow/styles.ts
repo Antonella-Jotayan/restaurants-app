@@ -1,3 +1,4 @@
+import {COLORS} from '@src/styles/foundations/colors';
 import {FONTS} from '@src/styles/foundations/fonts';
 import {StyleSheet} from 'react-native';
 
@@ -8,6 +9,12 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     borderRadius: 50,
   },
+  headerLeftContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerLeftInfoContainer: {marginLeft: 10},
   ratingContainer: {
     flexDirection: 'row',
   },
@@ -22,7 +29,7 @@ const styles = StyleSheet.create({
     ...FONTS.body,
   },
   infoItem: {
-    ...FONTS.body,
+    ...FONTS.smallHighlight,
     paddingVertical: 6,
   },
   reviewsContainer: {
@@ -36,8 +43,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingVertical: 30,
-    borderBottomColor: 'gray',
+    paddingVertical: 20,
+    borderBottomColor: COLORS.semiDark,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   textContentContainer: {

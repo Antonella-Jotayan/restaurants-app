@@ -12,6 +12,7 @@ import {useGeolocation} from '@src/hooks/useGeolocation';
 import {RootStackNavigatorProps} from '@src/navigators/RootStackNavigator/types';
 import {useAppDispatch} from '@src/store/store';
 import {addRecent} from '@src/store/slices/recentRestaurants';
+import {COLORS} from '@src/styles/foundations/colors';
 
 interface MapProps {
   coordinates: Coordinates;
@@ -85,6 +86,7 @@ const Map: FC<MapProps> = ({coordinates, setCoordinates}) => {
         name="location"
         style={styles.locationButton}
         onPress={onPressUserLocation}
+        fill={COLORS.primary}
       />
     </>
   );

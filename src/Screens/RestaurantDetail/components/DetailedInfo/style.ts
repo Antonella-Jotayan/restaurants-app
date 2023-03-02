@@ -9,7 +9,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 10,
   },
-  infoItem: {paddingVertical: 6, ...FONTS.smallHighlight},
+  infoItem: {
+    ...FONTS.smallHighlight,
+  },
+  infoItemLink: {
+    paddingVertical: 6,
+    ...FONTS.link,
+  },
   infoValue: {...FONTS.body},
+  infoItemContainer: {
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    marginVertical: 10,
+  },
 });
 export {styles};

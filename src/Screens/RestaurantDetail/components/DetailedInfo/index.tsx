@@ -21,18 +21,19 @@ const DetailedInfo: FC<DetailedInfoProps> = ({restaurant}) => {
   return (
     <View style={styles.infoItemsContainer}>
       {formatted_address && (
-        <Text style={styles.infoItem}>
-          Adress: <Text style={styles.infoValue}>{formatted_address}</Text>
-        </Text>
+        <View style={styles.infoItemContainer}>
+          <Text style={styles.infoItem}>Adress: </Text>
+          <Text style={styles.infoValue}>{formatted_address}</Text>
+        </View>
       )}
       {types?.length && (
-        <Text style={styles.infoItem}>
-          Type:{' '}
+        <View style={styles.infoItemContainer}>
+          <Text style={styles.infoItem}>Type: </Text>
           <Text style={styles.infoValue}>{getRestaurantTypes(types)}</Text>
-        </Text>
+        </View>
       )}
       {url && (
-        <Text style={styles.infoItem} onPress={onPressLink}>
+        <Text style={styles.infoItemLink} onPress={onPressLink}>
           Open in maps
         </Text>
       )}

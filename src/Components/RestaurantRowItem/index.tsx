@@ -5,9 +5,11 @@ import {RootStackNavigatorProps} from '@src/navigators/RootStackNavigator/types'
 import {Restaurant} from '@src/store/apis/googleMapsApi/types';
 import {SvgImage} from '../SvgImage';
 import {styles} from './styles';
+import {COLORS} from '@src/styles/foundations/colors';
 
 interface RestaurantRowItemProps {
   item: Restaurant;
+  icon?: string;
 }
 
 const RestaurantRowItem: FC<RestaurantRowItemProps> = ({item}) => {
@@ -30,7 +32,7 @@ const RestaurantRowItem: FC<RestaurantRowItemProps> = ({item}) => {
           </Text>
         )}
       </View>
-      <SvgImage name="arrowRight" />
+      <SvgImage name="arrowRight" fill={COLORS.primary} />
     </TouchableOpacity>
   );
 };

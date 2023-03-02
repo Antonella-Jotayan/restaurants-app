@@ -1,3 +1,4 @@
+import {COLORS} from '@src/styles/foundations/colors';
 import {FONTS} from '@src/styles/foundations/fonts';
 import {StyleSheet} from 'react-native';
 
@@ -14,6 +15,7 @@ const styles = StyleSheet.create({
   },
 
   flatlistContainer: {
+    backgroundColor: COLORS.light,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
