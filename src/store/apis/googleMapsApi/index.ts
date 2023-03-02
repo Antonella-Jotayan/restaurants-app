@@ -73,6 +73,11 @@ export const googleMapsApi = createApi({
           key: GOOGLE_MAPS_API_KEY,
         },
       }),
+      providesTags: (response, _1, coordinates) => {
+        return response
+          ? [{type: 'GoogleMaps', id: JSON.stringify(coordinates)}]
+          : ['GoogleMaps'];
+      },
     }),
     getRestaurantDetail: builder.query<RestaurantDetailResponse, string>({
       query: placeId => ({
@@ -94,6 +99,9 @@ export const googleMapsApi = createApi({
           key: GOOGLE_MAPS_API_KEY,
         },
       }),
+      providesTags: (response, _1, placeId) => {
+        return response ? [{type: 'GoogleMaps', id: placeId}] : ['GoogleMaps'];
+      },
     }),
   }),
 });

@@ -9,7 +9,6 @@ interface ReviewsProps {
 }
 
 const Reviews: FC<ReviewsProps> = ({restaurant}) => {
-  console.log('restaurant', JSON.stringify(restaurant, null, 2));
   if (!restaurant.reviews?.length) {
     return null;
   }
@@ -17,7 +16,7 @@ const Reviews: FC<ReviewsProps> = ({restaurant}) => {
     <View style={styles.reviewsContainer}>
       <Text style={styles.reviewsTitle}>Reviews</Text>
       {restaurant.reviews.map(review => {
-        return <ReviewRow review={review} />;
+        return <ReviewRow key={review.time} review={review} />;
       })}
     </View>
   );

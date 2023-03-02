@@ -9,7 +9,7 @@ const Home = () => {
   const [coordinates, setCoordinates] = useState<Coordinates>();
   return (
     <View style={styles.container}>
-      <Map coordinates={coordinates} />
+      <Map coordinates={coordinates} setCoordinates={setCoordinates} />
       <SearchBottomSheet setCoordinates={setCoordinates} />
     </View>
   );

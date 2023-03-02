@@ -5,9 +5,7 @@ import {styles} from './styles';
 import {SearchBar} from '../SearchBar';
 import {
   useLazyGetAutocompletedPlacesbyTextQuery,
-  useLazyGetNearRestaurantsQuery,
   useLazyGetPlaceDetailQuery,
-  useLazyGetRestaurantDetailQuery,
 } from '@src/store/apis/googleMapsApi';
 import {useDebounce} from '@src/hooks/useDebounce';
 import {Row} from '@src/Components/Row';
@@ -50,12 +48,19 @@ const SearchBottomSheet: FC<SearchBottomSheetProps> = ({setCoordinates}) => {
   }, []);
 
   const handleLocationPress = async (location: AddressPrediction) => {
-    const {data} = await getPlaceDetail(location.place_id);
-    const {lat: latitude, lng: longitude} = data?.result.geometry.location;
-    shouldFetch.current = false;
-    setLocationInput(location.structured_formatting.main_text);
-    sheetRef.current?.collapse();
-    setCoordinates({latitude, longitude});
+    try {
+      const {data, error} = await getPlaceDetail(location.place_id);
+      if (error || !data) {
+        throw new Error(String(error));
+      }
+      const {lat: latitude, lng: longitude} = data.result.geometry.location;
+      shouldFetch.current = false;
+      setLocationInput(location.structured_formatting.main_text);
+      sheetRef.current?.collapse();
+      setCoordinates({latitude, longitude});
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

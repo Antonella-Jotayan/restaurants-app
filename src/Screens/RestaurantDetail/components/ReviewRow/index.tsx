@@ -25,7 +25,9 @@ const ReviewRow: FC<ReviewRowProps> = ({review}) => {
             </View>
             <Text style={styles.infoItem}>{review.author_name}</Text>
           </View>
-          <Text style={styles.timeText}>{review.time}</Text>
+          <Text style={styles.timeText}>
+            {review.relative_time_description}
+          </Text>
         </View>
         <Text style={styles.reviewDescription}>{review.text}</Text>
       </View>
