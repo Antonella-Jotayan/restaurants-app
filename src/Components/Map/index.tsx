@@ -16,7 +16,7 @@ import {addRecent} from '@src/store/slices/recentRestaurants';
 import {COLORS} from '@src/styles/foundations/colors';
 
 interface MapProps {
-  coordinates: Coordinates;
+  coordinates?: Coordinates;
   setCoordinates: (value: Coordinates) => void;
 }
 
@@ -32,7 +32,7 @@ const initialRegion = {
 };
 
 const Map: FC<MapProps> = ({coordinates, setCoordinates}) => {
-  const {data} = useGetNearRestaurantsQuery(coordinates, {
+  const {data} = useGetNearRestaurantsQuery(coordinates!, {
     skip: !coordinates,
   });
 
@@ -48,10 +48,16 @@ const Map: FC<MapProps> = ({coordinates, setCoordinates}) => {
 
   const onPressUserLocation = () => {
     getLocation();
+    if (!coordinates) {
+      return;
+    }
     mapRef.current?.animateToRegion({...coordinates, ...deltas}, 1000);
   };
 
   const navigateToSortedByRating = () => {
+    if (!coordinates) {
+      return;
+    }
     navigation.navigate('RestaurantsByRating', {coordinates});
   };
 

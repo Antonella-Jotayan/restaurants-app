@@ -5,6 +5,7 @@ import {
   AddressDetailResponse,
   AddressGeocodeResponse,
   Coordinates,
+  NearRestaurantsResponse,
   Restaurant,
   RestaurantDetailResponse,
 } from './types';
@@ -69,12 +70,11 @@ export const googleMapsApi = createApi({
           location: `${latitude},${longitude}`,
           type: 'restaurant',
           rankby: 'distance',
-          limit: '10',
           language: 'en',
           key: ENV.GOOGLE_MAPS_API_KEY,
         },
       }),
-      transformResponse(response) {
+      transformResponse(response: NearRestaurantsResponse) {
         if (!response?.results) {
           return [];
         }

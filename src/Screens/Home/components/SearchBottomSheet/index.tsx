@@ -1,18 +1,11 @@
-import {FC, useCallback, useEffect, useRef, useState} from 'react';
+import {FC, useCallback, useRef} from 'react';
 import {Keyboard, TextInput} from 'react-native';
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {styles} from './styles';
 import {SearchBar} from '../SearchBar';
-import {
-  useLazyGetAutocompletedPlacesbyTextQuery,
-  useLazyGetPlaceDetailQuery,
-} from '@src/store/apis/googleMapsApi';
-import {useDebounce} from '@src/hooks/useDebounce';
 import {Row} from '@src/Components/Row';
-import {
-  AddressPrediction,
-  Coordinates,
-} from '@src/store/apis/googleMapsApi/types';
+import {Coordinates} from '@src/store/apis/googleMapsApi/types';
+import {useGetPlaces} from '../../hooks/useGetPlaces';
 
 interface SearchBottomSheetProps {
   setCoordinates: (value: Coordinates) => void;
@@ -21,22 +14,14 @@ interface SearchBottomSheetProps {
 const snapPoints = ['15%', '100%'];
 
 const SearchBottomSheet: FC<SearchBottomSheetProps> = ({setCoordinates}) => {
-  const sheetRef = useRef<BottomSheet>(null);
   const textInputRef = useRef<TextInput>(null);
-  const shouldFetch = useRef<boolean>(true);
-  const [locationInput, setLocationInput] = useState<string>('');
-
-  const [getPlacesByText, {data: places}] =
-    useLazyGetAutocompletedPlacesbyTextQuery();
-  const [getPlaceDetail] = useLazyGetPlaceDetailQuery();
-
-  const debouncedValue = useDebounce<string>(locationInput);
-
-  useEffect(() => {
-    if (shouldFetch.current) {
-      getPlacesByText(debouncedValue);
-    }
-  }, [debouncedValue, getPlacesByText]);
+  const {
+    sheetRef,
+    locationInput,
+    onSearchBarChange,
+    places,
+    handleLocationPress,
+  } = useGetPlaces({setCoordinates});
 
   const handleSheetChange = useCallback((index: number) => {
     if (index === 0) {
@@ -47,22 +32,6 @@ const SearchBottomSheet: FC<SearchBottomSheetProps> = ({setCoordinates}) => {
     }
   }, []);
 
-  const handleLocationPress = async (location: AddressPrediction) => {
-    try {
-      const {data, error} = await getPlaceDetail(location.place_id);
-      if (error || !data) {
-        throw new Error(String(error));
-      }
-      const {lat: latitude, lng: longitude} = data.result.geometry.location;
-      shouldFetch.current = false;
-      setLocationInput(location.structured_formatting.main_text);
-      sheetRef.current?.collapse();
-      setCoordinates({latitude, longitude});
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
     <BottomSheet
       keyboardBehavior="extend"
@@ -72,10 +41,7 @@ const SearchBottomSheet: FC<SearchBottomSheetProps> = ({setCoordinates}) => {
       <BottomSheetScrollView contentContainerStyle={styles.container}>
         <SearchBar
           value={locationInput}
-          onChange={e => {
-            setLocationInput(e.nativeEvent.text);
-            shouldFetch.current = true;
-          }}
+          onChange={onSearchBarChange}
           onPressIn={() => sheetRef.current?.expand()}
           ref={textInputRef}
         />
